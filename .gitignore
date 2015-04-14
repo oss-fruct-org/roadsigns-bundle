@@ -2,3 +2,4 @@ lib
 osmconvert
 osmosis
 plugins
+build-tools/build
