@@ -4,7 +4,7 @@ OUT=$(realpath $1)
 
 mkdir -p build
 cd build
-mkdir -p $1/plugins
+mkdir -p $OUT/plugins
 
 git clone https://github.com/ivashov/osmosis-region-writer.git
 cd osmosis-region-writer
