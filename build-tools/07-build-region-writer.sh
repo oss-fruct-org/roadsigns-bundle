@@ -8,5 +8,5 @@ mkdir -p $OUT/plugins
 
 git clone https://github.com/ivashov/osmosis-region-writer.git
 cd osmosis-region-writer
-./gradlew jar
-cp ./build/libs/OsmRegionWriter-1.0.jar $OUT/plugins
+./gradlew fatJar
+cp ./build/libs/OsmRegionWriter-with-dependencies-1.0.jar $OUT/plugins
