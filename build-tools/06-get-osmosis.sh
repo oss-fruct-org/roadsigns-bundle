@@ -1,10 +1,12 @@
 #!/bin/bash
 
+OUT=$(realpath $1)
+
 mkdir -p build/osmosis
-cd osmosis
+cd build
 
 wget http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-0.43.1.tgz
 cd osmosis
-tar -xf osmosis-0.43.1.tgz
+tar -xf ../osmosis-0.43.1.tgz
 cd ..
-mv osmosis $1
+mv osmosis $OUT
