@@ -18,10 +18,10 @@ if [ $# -lt 4 ]; then
     exit 1
 fi
 
-SOURCE_DIR=${1}
-POLYGON_DIR=${2}
-FILE_REGIONS=${3}
-TARGET_DIR=${4}
+SOURCE_DIR=$(realpath ${1})
+POLYGON_DIR=$(realpath ${2})
+FILE_REGIONS=$(realpath ${3})
+TARGET_DIR=$(realpath ${4})
 
 mkdir -p ${TARGET_DIR} || die "Cannot create directory ${TARGET_DIR}"
 
@@ -30,20 +30,32 @@ while read line; do
     FILE_OUTPUT=`echo "$line" | cut -f2`
     DESC=`echo "$line" | cut -f3`
 
-    SOURCE_FILE=${SOURCE_DIR}/${FILE_OUTPUT}.osm.pbf
-    TARGET_FILE=${FILE_OUTPUT}.osm.pbf
-    ${JAVA} ${JAVACMD_OPTIONS} -cp "${GH_LIB}" ${GH_CLASS} config=config.properties graph.location=${TARGET_DIR} osmreader.osm="$SOURCE_FILE"
-    cp ${POLYGON_DIR}/${FILE_POLY} ${TARGET_DIR}/polygon.poly
+    SOURCE_FILE="${SOURCE_DIR}/${FILE_OUTPUT}.osm.pbf"
+    TARGET_FILE="${TARGET_DIR}/${FILE_OUTPUT}.osm.pbf.ghz"
 
-    cat << EOF > ${TARGET_DIR}/description.txt
+    OUTPUT_DIR="${TARGET_DIR}/out"
+
+    ${JAVA} ${JAVACMD_OPTIONS} -cp "${GH_LIB}" ${GH_CLASS} config=config.properties \
+        graph.location="${OUTPUT_DIR}" osmreader.osm="$SOURCE_FILE"
+
+    cp "${POLYGON_DIR}/${FILE_POLY}" "${OUTPUT_DIR}/polygon.poly"
+
+    mkdir -p "${OUTPUT_DIR}/regions6"
+    osmosis/bin/osmosis --rb "$SOURCE_FILE" --wrd file="${OUTPUT_DIR}/regions6"
+    ./rdp-poly.sh "${OUTPUT_DIR}/regions6" 1000
+
+    cat << EOF > ${OUTPUT_DIR}/description.txt
 <file>
     <region-id>$(./create-id.sh rb "${FILE_OUTPUT}")</region-id>
     <name>${FILE_OUTPUT}.osm.pbf.ghz</name>
     <description lang="ru">${DESC}</description>
 </file>
 EOF
-    pushd ${TARGET_DIR}
-    zip ${TARGET_FILE}.ghz description.txt polygon.poly edges geometry location_index names nodes properties
-    rm description.txt polygon.poly edges geometry location_index names nodes properties
+    pushd "${OUTPUT_DIR}"
+    zip -r "${TARGET_FILE}" description.txt polygon.poly edges geometry location_index names nodes properties regions6
     popd
-done < ${FILE_REGIONS}
+    
+    pushd "${TARGET_DIR}"
+    rm -rv out
+    popd
+done < "${FILE_REGIONS}"
