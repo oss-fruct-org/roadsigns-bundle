@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p ../lib ../osmconvert ../plugins
+mkdir -p ../lib ../osmconvert ../plugins ../poly
 ./01-build-graphhopper.sh ..
 ./02-build-graphhopper-priority.sh ..
 ./03-get-slf4j.sh ..
@@ -9,3 +9,4 @@ mkdir -p ../lib ../osmconvert ../plugins
 ./06-get-osmosis.sh ..
 ./07-build-region-writer.sh ..
 ./08-get-mapwriter.sh ..
+./09-get-poly.sh ..
