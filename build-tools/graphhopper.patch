@@ -1,0 +1,48 @@
+diff --git a/core/pom.xml b/core/pom.xml
+index 793f282..27b0097 100644
+--- a/core/pom.xml
++++ b/core/pom.xml
+@@ -113,6 +113,9 @@
+                         <descriptors>
+                             <descriptor>src/main/assembly/android.xml</descriptor>
+                         </descriptors>
++                        <descriptorRefs>
++                             <descriptorRef>jar-with-dependencies</descriptorRef>
++                       </descriptorRefs>
+                     </configuration>
+                 </plugin>                
+                 
+diff --git a/graphhopper.sh b/graphhopper.sh
+index 8c18d9d..e8aaec8 100755
+--- a/graphhopper.sh
++++ b/graphhopper.sh
+@@ -110,13 +110,14 @@ function execMvn {
+ function packageCoreJar {
+   if [ ! -d "./target" ]; then
+     echo "## building parent"
+-    execMvn --non-recursive install
++    execMvn --non-recursive install assembly:single
+   fi
+   
+   if [ ! -f "$JAR" ]; then
+     echo "## now building graphhopper jar: $JAR"
+     echo "## using maven at $MAVEN_HOME"
+     
++    execMvn --projects core -DskipTests=true install assembly:single
+     execMvn --projects tools -am -DskipTests=true install
+     execMvn --projects tools -DskipTests=true install assembly:single
+   else
+diff --git a/pom.xml b/pom.xml
+index aaf41ac..f03bada 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -99,6 +99,9 @@
+                     <fork>true</fork>
+                     <source>1.7</source>
+                     <target>1.7</target>
++                    <descriptorRefs>
++                         <descriptorRef>jar-with-dependencies</descriptorRef>
++                    </descriptorRefs>
+                 </configuration>
+             </plugin>
+             
