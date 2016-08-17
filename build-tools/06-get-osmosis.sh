@@ -5,8 +5,8 @@ OUT=$(realpath $1)
 mkdir -p build/osmosis
 cd build
 
-wget http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-0.43.1.tgz
+wget -c http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-latest.tgz
 cd osmosis
-tar -xf ../osmosis-0.43.1.tgz
+tar -xf ../osmosis-latest.tgz
 cd ..
 mv osmosis $OUT
