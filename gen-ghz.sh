@@ -34,6 +34,7 @@ while read line; do
     TARGET_FILE="${TARGET_DIR}/${FILE_OUTPUT}.osm.pbf.ghz"
 
     OUTPUT_DIR="${TARGET_DIR}/out"
+    mkdir -p ${OUTPUT_DIR}
 
     ${JAVA} ${JAVACMD_OPTIONS} -cp "${GH_LIB}" ${GH_CLASS} config=config.properties \
         graph.location="${OUTPUT_DIR}" osmreader.osm="$SOURCE_FILE"

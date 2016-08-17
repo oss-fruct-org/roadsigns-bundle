@@ -10,4 +10,5 @@ cd graphhopper
 git apply <../../graphhopper.patch
 ./graphhopper.sh build
 cp ./core/target/graphhopper-0.7.0-jar-with-dependencies.jar $OUT/lib
+rm -f $OUT/lib/graphhopper.jar
 ln -s graphhopper-0.7.0-jar-with-dependencies.jar $OUT/lib/graphhopper.jar
