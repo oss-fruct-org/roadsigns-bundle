@@ -1,7 +1,6 @@
 #!/bin/bash
 
 GH_LIB="lib/*:osmosis/lib/default/*"
-GH_CLASS="org.fruct.oss.ghpriority.Main"
 if [ "x$JAVA_HOME" = "x" ]; then
     JAVA=java
 else
@@ -13,15 +12,16 @@ function die {
     exit 1
 }
 
-if [ $# -lt 4 ]; then
-    echo "Usage: $0 source-dir polygon-dir regions-file target-dir"
+if [ $# -lt 5 ]; then
+    echo "Usage: $0 source-dir polygon-dir regions-file main-GH-class target-dir"
     exit 1
 fi
 
 SOURCE_DIR=$(realpath ${1})
 POLYGON_DIR=$(realpath ${2})
 FILE_REGIONS=$(realpath ${3})
-TARGET_DIR=$(realpath ${4})
+GH_CLASS=${4}
+TARGET_DIR=$(realpath ${5})
 
 mkdir -p ${TARGET_DIR} || die "Cannot create directory ${TARGET_DIR}"
 

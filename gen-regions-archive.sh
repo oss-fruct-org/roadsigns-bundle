@@ -5,9 +5,10 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-FILE_REGIONS=${1}
-DIR_POLY=${2}
-TARGET_FILE=${3}
+FILE_REGIONS=$(realpath ${1})
+DIR_POLY=$(realpath ${2})
+TARGET_FILE=$(realpath ${3})
+mv ${TARGET_FILE} ${TARGET_FILE}.bak
 
 TMP_DIR=`mktemp -d`
 
