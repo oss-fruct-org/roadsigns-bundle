@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 function die {
     echo ${1}
     exit 1
@@ -16,6 +18,8 @@ DIR_POLY=${3}
 DIR_OUTPUT=${4}
 
 N=$(cat ${FILE_REGIONS} | wc -l)
+
+echo xargs osmosis/bin/osmosis --rb ${FILE_PBF} --tee ${N}
 
 while read line; do 
    FILE_POLY=`echo "$line" | cut -f1`  

@@ -1,7 +1,11 @@
 #!/bin/bash
 
+set -e
+
 OUT=$(realpath $1)
 
 mkdir -p $OUT/plugins
-wget http://ci.mapsforge.org/job/0.6.1/lastSuccessfulBuild/artifact/mapsforge-map-writer/build/libs/mapsforge-map-writer-0.6.1-jar-with-dependencies.jar -O $OUT/plugins/mapsforge-map-writer-0.6.1.jar
+if [ ! -f $OUT/plugins/mapsforge-map-writer-0.8.0.jar ]; then
+    wget -c "http://search.maven.org/remotecontent?filepath=org/mapsforge/mapsforge-map-writer/0.8.0/mapsforge-map-writer-0.8.0-jar-with-dependencies.jar" -O $OUT/plugins/mapsforge-map-writer-0.8.0.jar
+fi
 
