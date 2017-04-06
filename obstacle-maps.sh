@@ -1,3 +1,6 @@
+
+set -e
+
 # исходный файл карт ОСМ
 SOURCE_PBF_FILE=../source/russia.osm.pbf
 

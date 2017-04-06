@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ $# -lt 2 ]; then
     echo "Usage: $0 regions-file polygon-dir target-file"
     exit 1
@@ -8,7 +10,9 @@ fi
 FILE_REGIONS=$(realpath ${1})
 DIR_POLY=$(realpath ${2})
 TARGET_FILE=$(realpath ${3})
-mv ${TARGET_FILE} ${TARGET_FILE}.bak
+if [ -f ${TARGET_FILE} ]; then
+    mv ${TARGET_FILE} ${TARGET_FILE}.bak
+fi
 
 TMP_DIR=`mktemp -d`
 

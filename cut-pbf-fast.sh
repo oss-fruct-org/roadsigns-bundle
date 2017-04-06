@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 GH_LIB="lib/graphhopper-0.4-SNAPSHOT-jar-with-dependencies.jar"
 GH_CLASS="com.graphhopper.GraphHopper"
 

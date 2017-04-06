@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 GH_LIB="lib/*:osmosis/lib/default/*"
 if [ "x$JAVA_HOME" = "x" ]; then
     JAVA=java

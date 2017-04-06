@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ $# -lt 2 ]; then
     echo "Usage: $0 iv string"
     exit 1

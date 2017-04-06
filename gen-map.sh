@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ "x$JAVA_HOME" = "x" ]; then
     JAVA=java
 else
